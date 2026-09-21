@@ -297,7 +297,7 @@ class TimingTowerOverlay(BaseOverlay):
         return {
             "position": driver_info.get("position", 0),
             "teamIcon": self.team_logo_uris[driver_info.get("team", "UNKNOWN")],
-            "name": driver_info.get("name", "UNKNOWN"),
+            "name": driver_info.get("name", "UNKNOWN").split(" ")[-1][:3], # First 3 letters of last name
             "delta": self._format_delta(driver_info, delta_info, driver_idx, ref_index, session_type),
             "deltaToLeader": self._format_delta_to_leader(driver_info, delta_info, driver_idx, 0, session_type),
             # Subscript, not .get(): the defaultdict's fallback icon only fires via __missing__,
@@ -351,18 +351,21 @@ class TimingTowerOverlay(BaseOverlay):
             Formatted delta string
         """
         if is_race_type_session(session_type):
+            
             if driver_info.get("is-pitting", False):
                 return "PIT"
-
+            if driver_info.get("position", 0) == 1:
+                return "INT"
             dnf_status = driver_info.get("dnf-status", "")
             if dnf_status in {"DNF", "DSQ"}:
                 return dnf_status
-
-        delta_field = "relative-delta" if is_relative_delta else "delta-to-leader"
+        # delta_field = "relative-delta" if is_relative_delta else "delta-to-leader"
+        delta_field = "delta-to-car-in-front" if is_relative_delta else "delta-to-leader" 
         delta = delta_info.get(delta_field, 0)
-        if is_relative_delta and ((driver_idx == ref_index) or not delta):
+        
+        # if is_relative_delta and ((driver_idx == ref_index) or not delta):
+        if is_relative_delta and (not delta): 
             return "---"
-
         return F1Utils.formatFloat(delta / 1000, precision=3, signed=True)
 
     def _format_delta_to_leader(
@@ -386,6 +389,8 @@ class TimingTowerOverlay(BaseOverlay):
             Formatted delta string
         """
         if is_race_type_session(session_type):
+            if driver_info.get("position", 0) == 1:
+                        return "LEADER"
             return self._format_delta(driver_info, delta_info, driver_idx, ref_index,
                                       session_type, is_relative_delta=False)
         return self._format_delta(driver_info, delta_info, driver_idx, ref_index, session_type)
@@ -406,7 +411,7 @@ class TimingTowerOverlay(BaseOverlay):
         wear = tyre_info["current-wear"]
         if telemetry_public and wear:
             max_wear = F1Utils.getMaxTyreWear(wear)
-            return f"{F1Utils.formatFloat(max_wear['max-wear'], 0)}%"
+            return f" {F1Utils.formatFloat(max_wear['max-wear'], 0):>2}% {str(tyre_info['tyre-age']):>2}L"
 
         # Wear is unavailable. Hybrid falls back to age, wear-only mode shows a dash.
         if self.tyre_info_mode is TimingTowerTyreInfoMode.TYRE_WEAR:
@@ -508,6 +513,8 @@ class TimingTowerOverlay(BaseOverlay):
 
         fl = dmg_info.get('fl-wing-damage', '---')
         fr = dmg_info.get('fr-wing-damage', '---')
+        if f"{fl}-{fr}" == "0-0":
+            return ""
         return f"{fl}-{fr}"
 
     def _format_driver_status(self, status: Optional[str]) -> str:

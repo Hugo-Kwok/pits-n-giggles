@@ -26,10 +26,10 @@ Window {
         id: cols
         readonly property int pos: 30
         readonly property int team_logo: 25
-        readonly property int name: 45
+        readonly property int name: 120
         readonly property int delta: 72
         readonly property int delta_to_leader: 72
-        readonly property int tyre: 95
+        readonly property int tyre: 58
         readonly property int ers_drs: 58
         readonly property int pens: 44
         readonly property int tl_warns: 32
@@ -74,27 +74,24 @@ Window {
     // which the Loader sets via onLoaded after instantiation.
     Component {
         id: deltaColComp
-
         Text {
             property var rowData
             anchors.fill: parent
             text: rowData ? rowData.delta : ""
-            font.family: "Formula1"
+            font.family: "Consolas"
             font.pixelSize: 13
-            color: rowData && !isNaN(parseFloat(rowData.delta)) && parseFloat(rowData.delta) < 1
-                ? "#00ff00"
-                : "#ffffff"
+            color: "#ffffff"
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
         }
-    }   
+    }
     Component {
         id: deltaToLeaderColComp
         Text {
             property var rowData
             anchors.fill: parent
             text: rowData ? rowData.deltaToLeader : ""
-            font.family: "Formula1"
+            font.family: "Consolas"
             font.pixelSize: 13
             color: "#ffffff"
             horizontalAlignment: Text.AlignHCenter
@@ -108,9 +105,7 @@ Window {
             property var rowData
             anchors.fill: parent
             Row {
-                anchors.left: parent.left
-                anchors.leftMargin: 6
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.centerIn: parent
                 spacing: 4
                 Image {
                     width: 20
@@ -152,7 +147,7 @@ Window {
             Text {
                 anchors.centerIn: parent
                 text: ersDrsCell.rowData ? ersDrsCell.rowData.ers : ""
-                font.family: "Formula1"
+                font.family: "Consolas"
                 font.pixelSize: 13
                 color: "#dddddd"
                 horizontalAlignment: Text.AlignHCenter
@@ -196,7 +191,7 @@ Window {
             property var rowData
             anchors.fill: parent
             text: (rowData && rowData.tlWarns !== undefined) ? rowData.tlWarns : "---"
-            font.family: "Formula1"
+            font.family: "Consolas"
             font.pixelSize: 13
             color: "#dddddd"
             horizontalAlignment: Text.AlignHCenter
@@ -209,7 +204,7 @@ Window {
             property var rowData
             anchors.fill: parent
             text: rowData ? rowData.bestLap : ""
-            font.family: "Formula1"
+            font.family: "Consolas"
             font.pixelSize: 12
             color: rowData ? rowData.bestLapColor : "#dddddd"
             horizontalAlignment: Text.AlignHCenter
@@ -222,7 +217,7 @@ Window {
             property var rowData
             anchors.fill: parent
             text: rowData ? rowData.lastLap : ""
-            font.family: "Formula1"
+            font.family: "Consolas"
             font.pixelSize: 12
             color: rowData ? rowData.lastLapColor : "#dddddd"
             horizontalAlignment: Text.AlignHCenter
@@ -235,7 +230,7 @@ Window {
             property var rowData
             anchors.fill: parent
             text: rowData ? rowData.wingDmg : ""
-            font.family: "Formula1"
+            font.family: "Consolas"
             font.pixelSize: 12
             color: rowData ? rowData.wingDmgColor : "#dddddd"
             horizontalAlignment: Text.AlignHCenter
@@ -248,7 +243,7 @@ Window {
             property var rowData
             anchors.fill: parent
             text: rowData ? rowData.speedTrap : ""
-            font.family: "Formula1"
+            font.family: "Consolas"
             font.pixelSize: 12
             color: "#dddddd"
             horizontalAlignment: Text.AlignHCenter
@@ -261,7 +256,7 @@ Window {
             property var rowData
             anchors.fill: parent
             text: rowData ? rowData.fuel : ""
-            font.family: "Formula1"
+            font.family: "Consolas"
             font.pixelSize: 12
             color: rowData ? rowData.fuelColor : "#dddddd"
             horizontalAlignment: Text.AlignHCenter
@@ -438,7 +433,7 @@ Window {
                                     font.family: "Formula1"
                                     font.pixelSize: 10
                                     color: "#666666"
-                                    horizontalAlignment: Text.AlignHCenter
+                                    horizontalAlignment: Text.AlignLeft
                                     verticalAlignment: Text.AlignVCenter
                                 }
                                 Rectangle {
@@ -609,7 +604,7 @@ Window {
                                     Text {
                                         anchors.fill: parent
                                         text: rowItem.rowData.position < 10 ? rowItem.rowData.position + " " : rowItem.rowData.position
-                                        font.family: "Formula1"
+                                        font.family: "Consolas"
                                         font.pixelSize: 12
                                         color: "#dddddd"
                                         horizontalAlignment: Text.AlignHCenter
@@ -646,9 +641,8 @@ Window {
                                     text: rowItem.rowData.name
                                     font.family: "Formula1"
                                     font.pixelSize: 13
-                                    font.bold: true
                                     color: "#ffffff"
-                                    horizontalAlignment: Text.AlignHCenter
+                                    horizontalAlignment: Text.AlignLeft
                                     verticalAlignment: Text.AlignVCenter
                                     elide: Text.ElideRight
                                 }
@@ -795,7 +789,7 @@ Window {
                                         width: root.ttColLapTime
                                         height: parent.height
                                         text: ttRow.lapTimeStr
-                                        font.family: "Formula1"
+                                        font.family: "Consolas"
                                         font.pixelSize: 13
                                         color: "#ffffff"
                                         horizontalAlignment: Text.AlignHCenter
@@ -805,7 +799,7 @@ Window {
                                         width: root.ttColSector
                                         height: parent.height
                                         text: ttRow.s1TimeStr
-                                        font.family: "Formula1"
+                                        font.family: "Consolas"
                                         font.pixelSize: 12
                                         color: "#cccccc"
                                         horizontalAlignment: Text.AlignHCenter
@@ -815,7 +809,7 @@ Window {
                                         width: root.ttColSector
                                         height: parent.height
                                         text: ttRow.s2TimeStr
-                                        font.family: "Formula1"
+                                        font.family: "Consolas"
                                         font.pixelSize: 12
                                         color: "#cccccc"
                                         horizontalAlignment: Text.AlignHCenter
@@ -825,7 +819,7 @@ Window {
                                         width: root.ttColSector
                                         height: parent.height
                                         text: ttRow.s3TimeStr
-                                        font.family: "Formula1"
+                                        font.family: "Consolas"
                                         font.pixelSize: 12
                                         color: "#cccccc"
                                         horizontalAlignment: Text.AlignHCenter
