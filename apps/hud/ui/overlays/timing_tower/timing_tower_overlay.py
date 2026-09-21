@@ -351,14 +351,13 @@ class TimingTowerOverlay(BaseOverlay):
             Formatted delta string
         """
         if is_race_type_session(session_type):
-            
+            dnf_status = driver_info.get("dnf-status", "")
+            if dnf_status in {"DNF", "DSQ"}:
+                return dnf_status
             if driver_info.get("is-pitting", False):
                 return "PIT"
             if driver_info.get("position", 0) == 1:
                 return "INT"
-            dnf_status = driver_info.get("dnf-status", "")
-            if dnf_status in {"DNF", "DSQ"}:
-                return dnf_status
         # delta_field = "relative-delta" if is_relative_delta else "delta-to-leader"
         delta_field = "delta-to-car-in-front" if is_relative_delta else "delta-to-leader" 
         delta = delta_info.get(delta_field, 0)
