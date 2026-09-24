@@ -410,7 +410,7 @@ class TimingTowerOverlay(BaseOverlay):
         wear = tyre_info["current-wear"]
         if telemetry_public and wear:
             max_wear = F1Utils.getMaxTyreWear(wear)
-            return f" {F1Utils.formatFloat(max_wear['max-wear'], 0):>2}% {str(tyre_info['tyre-age']):>2}L"
+            return f"{F1Utils.formatFloat(max_wear['max-wear'], 0):>2}% {str(tyre_info['tyre-age']):>2}L"
 
         # Wear is unavailable. Hybrid falls back to age, wear-only mode shows a dash.
         if self.tyre_info_mode is TimingTowerTyreInfoMode.TYRE_WEAR:
@@ -480,7 +480,7 @@ class TimingTowerOverlay(BaseOverlay):
             return self._format_lap_time(lap_ms)
         if lap_ms is None:
             return "---"
-        return F1Utils.formatFloat((ref_ms - lap_ms) / 1000, precision=3, signed=True)
+        return f"{F1Utils.formatFloat((ref_ms - lap_ms) / 1000, precision=3, signed=True)}|{self._format_lap_time(lap_ms)}"
 
     def _format_lap_time(self, lap_time: Optional[int]) -> str:
         """Format lap time display.

@@ -29,12 +29,12 @@ Window {
         readonly property int name: 45
         readonly property int delta: 72
         readonly property int delta_to_leader: 72
-        readonly property int tyre: 95
+        readonly property int tyre: 100
         readonly property int ers_drs: 58
         readonly property int pens: 44
         readonly property int tl_warns: 32
-        readonly property int best_lap: 75
-        readonly property int last_lap: 72
+        readonly property int best_lap: 150
+        readonly property int last_lap: 150
         readonly property int wing_dmg: 50
         readonly property int speed_trap: 75
         readonly property int fuel: 55
@@ -127,7 +127,7 @@ Window {
                 Text {
                     text: tyreCell.rowData ? tyreCell.rowData.tyreWear : ""
                     font.family: "Consolas"
-                    font.pixelSize: 13
+                    font.pixelSize: 15
                     color: "#ffffff"
                     anchors.verticalCenter: parent.verticalCenter
                 }
@@ -209,10 +209,10 @@ Window {
             property var rowData
             anchors.fill: parent
             text: rowData ? rowData.bestLap : ""
-            font.family: "Formula1"
-            font.pixelSize: 12
+            font.family: "Consolas"
+            font.pixelSize: 15
             color: rowData ? rowData.bestLapColor : "#dddddd"
-            horizontalAlignment: Text.AlignHCenter
+            horizontalAlignment: Text.AlignRight
             verticalAlignment: Text.AlignVCenter
         }
     }
@@ -222,10 +222,10 @@ Window {
             property var rowData
             anchors.fill: parent
             text: rowData ? rowData.lastLap : ""
-            font.family: "Formula1"
-            font.pixelSize: 12
-            color: rowData ? rowData.lastLapColor : "#dddddd"
-            horizontalAlignment: Text.AlignHCenter
+            font.family: "Consolas"
+            font.pixelSize: 15
+            color: text.startsWith("+") ? "yellow" : "#dddddd"
+            horizontalAlignment: Text.AlignRight
             verticalAlignment: Text.AlignVCenter
         }
     }
